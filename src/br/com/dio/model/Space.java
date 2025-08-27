@@ -2,37 +2,39 @@ package br.com.dio.model;
 
 public class Space {
 
-    private Integer actual;
-    private final int expected;
-    private final boolean fixed;
+    private final int expected;   // valor da pista (se fixed) ou 0
+    private final boolean fixed;  // true se é pista fixa
+    private Integer actual;       // valor atual colocado (null = vazio)
 
-
-    public Space(final int expected, final boolean fixed) {
+    public Space(int expected, boolean fixed) {
         this.expected = expected;
         this.fixed = fixed;
-        if (fixed){
-            actual = expected;
+        if (fixed) {
+            this.actual = expected == 0 ? null : expected; // pista visível
+        } else {
+            this.actual = null;
         }
+    }
+
+    public boolean isFixed() {
+        return fixed;
     }
 
     public Integer getActual() {
         return actual;
     }
 
-    public void setActual(final Integer actual) {
+    public void setActual(Integer value) {
         if (fixed) return;
-        this.actual = actual;
+        this.actual = value;
     }
 
-    public void clearSpace(){
-        setActual(null);
+    public void clearSpace() {
+        if (fixed) return;
+        this.actual = null;
     }
 
     public int getExpected() {
         return expected;
-    }
-
-    public boolean isFixed() {
-        return fixed;
     }
 }
